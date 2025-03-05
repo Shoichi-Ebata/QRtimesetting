@@ -1,0 +1,52 @@
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <script src="qrcode.min.js"></script>
+    <meta charset="utf-8">
+    <script>
+        function ddigit(num) {
+            var dd;
+            if (num < 10) {
+                dd = '0' + num;
+            } else {
+                dd = num;
+            }
+            return dd;
+        }
+        function realtime() {
+            var now = new Date();
+            var y = now.getFullYear();
+            var m = ddigit(now.getMonth() + 1);
+            var d = ddigit(now.getDate());
+            var w = now.getDay();
+            var h = ddigit(now.getHours());
+            var mi = ddigit(now.getMinutes());
+            var s = ddigit(now.getSeconds());
+            target = document.getElementById('datetime');
+            target.innerHTML = '現在日時　' + y + '/' + m + '/' + d + ' ' + h + ':' + mi + ':' + s;
+            let qrcode = document.getElementById("qrcode");
+            qrcode.innerHTML = null;
+            let qrcode_object = new QRCode(
+                qrcode, {
+                text:"time"+ y + m + d + h + mi + s,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            qrcode.style.display = "block";
+        }
+        setInterval('realtime()', 100);
+    </script>
+</head>
+
+<body>
+    <h3>QR 時刻設定</h3>
+    <p id="datetime"></p>
+    <div id="qrcode"></div>
+</body>
+
+</html>
